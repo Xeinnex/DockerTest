@@ -5,7 +5,7 @@ export default function Home() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 text-white font-sans">
       <div className="text-center space-y-6 p-8">
         <h1 className="text-5xl font-bold drop-shadow-lg">
-          🚀 Docker Test Zone
+          🚀 Dockrd Test Zone
         </h1>
 
         <p className="text-lg opacity-90">
@@ -16,10 +16,10 @@ export default function Home() {
           <div className="px-6 py-3 bg-black/30 rounded-full">
             Next.js + Docker = 🔥
           </div>
-
           <div className="text-sm opacity-80">
             Build • Ship • Break • Fix • Repeat
           </div>
+          npm
         </div>
 
         <button
