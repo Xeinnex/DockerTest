@@ -5,7 +5,7 @@ export default function Home() {
     <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-purple-600 via-pink-500 to-orange-400 text-white font-sans">
       <div className="text-center space-y-6 p-8">
         <h1 className="text-5xl font-bold drop-shadow-lg">
-          🚀 Docker Test Zone
+          🚀 Docker Test Zone Final
         </h1>
 
         <p className="text-lg opacity-90">
