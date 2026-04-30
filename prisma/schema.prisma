@@ -1,0 +1,14 @@
+datasource db {
+  provider = "postgresql"
+}
+
+model Player {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  age       Int
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
