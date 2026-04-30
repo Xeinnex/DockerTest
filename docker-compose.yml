@@ -7,6 +7,9 @@ services:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/mydb
     depends_on:
       - db
+    networks:
+      - dokploy-network
+      - default
 
   db:
     image: postgres:18
@@ -22,3 +25,7 @@ services:
 
 volumes:
   postgres_data:
+
+networks:
+  dokploy-network:
+    external: true
