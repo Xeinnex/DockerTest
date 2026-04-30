@@ -5,27 +5,30 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 const adapter = new PrismaPg({
-  connectionString:
-    process.env.DATABASE_URL || "postgresql://dummy:dummy@localhost:5432/dummy",
+  connectionString: process.env.DATABASE_URL,
 });
 
 const prisma = new PrismaClient({ adapter });
 
 export async function GET(request: Request) {
+  // DEBUG: This will help us confirm Dockploy is injecting the right URL
+  console.log(
+    "Database connection attempt to:",
+    process.env.DATABASE_URL?.split("@")[1],
+  );
+
   try {
-    // 1. Grab the URL and look for the "?age=" parameter
     const { searchParams } = new URL(request.url);
     const ageParam = searchParams.get("age");
 
-    // 2. If there is an age, filter by it. If not, fetch nothing (or fetch all).
     const query = ageParam ? { where: { age: Number(ageParam) } } : undefined;
 
     const players = await prisma.player.findMany(query);
     return NextResponse.json(players, { status: 200 });
-  } catch (error) {
-    console.error("Failed to fetch players:", error);
+  } catch (error: any) {
+    console.error("Prisma Error:", error.message);
     return NextResponse.json(
-      { error: "Failed to fetch players" },
+      { error: "Failed to fetch players", details: error.message },
       { status: 500 },
     );
   }
