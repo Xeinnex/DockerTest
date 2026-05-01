@@ -62,3 +62,52 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function PUT(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, firstName, lastName, age } = body;
+
+    if (!id) {
+      return NextResponse.json({ error: "Missing ID" }, { status: 400 });
+    }
+
+    const updatedPlayer = await prisma.player.update({
+      where: { id: id }, // Ensure this matches your schema (id is a string/uuid)
+      data: {
+        firstName,
+        lastName,
+        age: Number(age),
+      },
+    });
+
+    // We MUST return a JSON object so the frontend .json() doesn't fail
+    return NextResponse.json(updatedPlayer, { status: 200 });
+  } catch (error: any) {
+    console.error("PUT Error:", error.message);
+    return NextResponse.json(
+      { error: "Failed to update", details: error.message },
+      { status: 500 },
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const body = await request.json();
+    const { id } = body;
+
+    // Prisma deletes the record where the ID matches
+    await prisma.player.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error: any) {
+    console.error("Failed to delete player:", error.message);
+    return NextResponse.json(
+      { error: "Failed to delete player", details: error.message },
+      { status: 500 },
+    );
+  }
+}
